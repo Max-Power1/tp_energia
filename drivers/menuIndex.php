@@ -32,7 +32,7 @@
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="./pages/iniciar-sesion.php">Iniciar Sesion</a>
+          <a class="nav-link" href="./pages/iniciar_sesion.php">Iniciar Sesion</a>
         </li>
       </ul>
 

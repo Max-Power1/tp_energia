@@ -12,6 +12,11 @@
         <?php include '../drivers/menuPages.php'; ?>
         <main>
             <h2>Formulario para guardar datos en la base de datos</h2>
+            <?php
+                if (isset($_GET['registro']) && $_GET['registro'] === 'exitoso') {
+                    echo "<p>Registro completado exitosamente. Ahora puedes iniciar sesión.</p>";
+                }
+            ?>
             <div class="row">
                 <div class="col-6">
                 <form id="dynamicForm" method="POST">
@@ -64,7 +69,7 @@
                     function setFormAction() {
                         const form = document.getElementById('dynamicForm');
                         const isCompany = document.getElementById('isCompanySwitch').checked;
-                        form.action = isCompany ? 'registrar_empresa.php' : 'registrar_persona.php';
+                        form.action = isCompany ? '../drivers/registrar_empresa.php' : '../drivers/registrar_persona.php';
                     }
                     </script>
 
