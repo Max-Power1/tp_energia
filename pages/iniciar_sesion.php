@@ -14,7 +14,7 @@
             <h2>Formulario para guardar datos en la base de datos</h2>
             <?php
                 if (isset($_GET['registro']) && $_GET['registro'] === 'exitoso') {
-                    echo "<p>Registro completado exitosamente. Ahora puedes iniciar sesión.</p>";
+                    echo '<div class="alert alert-success" role="alert">Registro completado exitosamente. Ahora puedes iniciar sesión.</div>';
                 }
             ?>
             <div class="row">
