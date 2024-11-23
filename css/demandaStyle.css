@@ -1,0 +1,61 @@
+.download-image {
+    max-width: 100%; /* Ajusta el tamaño de la imagen al contenedor */
+    height: auto; /* Mantiene las proporciones de la imagen */
+    border-radius: 10px; /* Bordes redondeados (opcional) */
+    margin-bottom: 20px; /* Espacio debajo de la imagen */
+    display: block;   /* Asegura que la imagen se comporte como un bloque */
+    margin-left: auto;  /* Centra la imagen horizontalmente */
+    margin-right: auto; /* Centra la imagen horizontalmente */
+}
+
+
+/* Estilo para la tabla de descarga */
+.download-table {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr; /* Tres columnas: nombre del archivo, fecha y botón */
+    gap: 20px;
+    justify-items: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+/* Estilo de las filas */
+.download-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr; /* Las tres columnas dentro de cada fila */
+    gap: 10px;
+    align-items: center;
+}
+
+/* Estilo de los elementos */
+.file-name, .file-date, .download-btn-container {
+    padding: 10px;
+    background-color: #f8f8f8;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 14px;
+}
+
+/* Estilo para los botones */
+.download-btn {
+    background-color: #2168d4;
+    color: white;
+    padding: 5px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+/* Estilo para los encabezados de la tabla */
+.download-header {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr; /* Tres columnas para el encabezado */
+    gap: 10px;
+    font-weight: bold;  /* Hacemos que el texto del encabezado sea negrita */
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 5px;
+}
