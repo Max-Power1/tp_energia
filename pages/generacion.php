@@ -10,8 +10,15 @@
 <body>
     <div class="container bg-primary-subtle">
         <?php include '../drivers/menuPages.php'; ?>
-        <h1>Formulario para guardar datos en la base de datos</h1>
 
+        <h1 class="text-center text-primary">Generacion</h1>
+
+        <div class="row">
+            <div class="col"><?php include("../drivers/tabla_generacion.php"); ?></div>
+            <div class="col text-center">
+                <img src="../assets/mapa_camesa.png" alt="">
+            </div>
+        </div>
 
     </div>
     <script src="../js/bootstrap.bundle.min.js"></script>

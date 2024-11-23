@@ -16,6 +16,14 @@
         </li>
 
         <li class="nav-item">
+          <a class="nav-link" href="./proyectos.php">Proyectos</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="./proyeccion.php">Proyeccion</a>
+        </li>
+
+        <li class="nav-item">
           <a class="nav-link" href="./demanda.php">Demanda</a>
         </li>
 
@@ -24,22 +32,14 @@
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="./proveedores.php">Proveedores</a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" href="./licitaciones.php">Licitaciones</a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" href="./iniciar_sesion.php">Iniciar Sesion</a>
+          <a class="nav-link" href="./login.php">Login</a>
         </li>
       </ul>
 
-      <form class="d-flex" role="search">
+      <!-- <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
+      </form> -->
 
     </div>
   </div>

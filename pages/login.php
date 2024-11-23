@@ -19,7 +19,7 @@
             ?>
             <div class="row">
                 <div class="col-6">
-                <form id="dynamicForm" method="POST">
+                <form id="dynamicForm" method="POST" action="muestra.php">
                     <!-- Selector Persona o Empresa -->
                     <div class="form-check form-switch mb-3">
                         <input type="checkbox" class="form-check-input" id="isCompanySwitch" onchange="toggleForm()">
@@ -69,6 +69,8 @@
                     function setFormAction() {
                         const form = document.getElementById('dynamicForm');
                         const isCompany = document.getElementById('isCompanySwitch').checked;
+
+                        // Establecer la acción del formulario
                         form.action = isCompany ? '../drivers/registrar_empresa.php' : '../drivers/registrar_persona.php';
                     }
                     </script>
