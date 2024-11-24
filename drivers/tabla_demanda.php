@@ -1,5 +1,5 @@
 <?php // SOLO ES PROVISORIO DESPUES SE BORRA ?>
-<table class="table">
+<table class="table menu">
   <thead>
     <tr>
       <th scope="col">#</th>
