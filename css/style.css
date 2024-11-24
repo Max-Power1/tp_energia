@@ -160,3 +160,19 @@ nav {
     height: auto; /* Mantiene la proporción del GIF */
 }
 
+/* menu avatar usuario */
+/* Modificar el z-index de la barra de navegación para asegurar que esté por encima */
+nav {
+    position: relative; /* Asegura que el z-index funcione */
+    z-index: 1050; /* Establecer un valor suficientemente alto */
+}
+
+/* Para los elementos dropdown dentro del menú */
+.navbar-nav .nav-item.dropdown .dropdown-menu {
+    z-index: 1060; /* Asegura que el menú desplegable esté por encima de otros elementos */
+}
+
+.navbar-toggler {
+    position: relative; /* Asegura que no interfiera con el menú desplegable */
+    z-index: 1060; /* Asegura que el botón de hamburguesa esté encima */
+}

@@ -1,5 +1,4 @@
 <?php
-    // Iniciar sesión para manejar mensajes entre páginas
     session_start();
     include("./conexion.php");
 
@@ -14,7 +13,10 @@
     $dni_cuit = $_POST['dni-cuit'];
     $password = $_POST['register-password'];
     $descripcion = isset($_POST['description']) ? $_POST['description'] : null;
-    $isEmpresa = isset($_POST['userTypeSwitch']) && $_POST['userTypeSwitch'] === 'on';
+    $isEmpresa = ($_POST['userType'] === 'empresa');
+
+    // Hashear la contraseña
+    $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 
     // Verificar si el correo ya está registrado
     $checkQuery = "SELECT correo FROM " . ($isEmpresa ? "empresas" : "usuarios") . " WHERE correo = ?";
@@ -25,7 +27,7 @@
 
     if ($stmt->num_rows > 0) {
         $_SESSION['message'] = "Correo ya se encuentra registrado.";
-        $_SESSION['message_type'] = "error"; // Clave para diferenciar mensajes
+        $_SESSION['message_type'] = "error";
         header("Location: login.php");
         exit;
     }
@@ -34,15 +36,13 @@
 
     // Insertar en la tabla correspondiente
     if ($isEmpresa) {
-        // Registro de empresa
         $insertQuery = "INSERT INTO empresas (nombre, correo, cuit, password, descripcion) VALUES (?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($insertQuery);
-        $stmt->bind_param("ssiss", $nombre, $correo, $dni_cuit, $password, $descripcion);
+        $stmt->bind_param("ssiss", $nombre, $correo, $dni_cuit, $hashedPassword, $descripcion);
     } else {
-        // Registro de persona
         $insertQuery = "INSERT INTO usuarios (nombre, correo, dni, password) VALUES (?, ?, ?, ?)";
         $stmt = $conn->prepare($insertQuery);
-        $stmt->bind_param("ssis", $nombre, $correo, $dni_cuit, $password);
+        $stmt->bind_param("ssis", $nombre, $correo, $dni_cuit, $hashedPassword);
     }
 
     if ($stmt->execute()) {
@@ -53,9 +53,8 @@
         $_SESSION['message_type'] = "error";
     }
 
-    // Redirigir a login.php después de intentar registrar
     $stmt->close();
     $conn->close();
     header("Location: login.php");
-    exit
+    exit;
 ?>

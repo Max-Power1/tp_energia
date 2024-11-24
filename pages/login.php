@@ -5,6 +5,7 @@
     // Mostrar mensajes si existen
     $message = "";
     if (isset($_SESSION['message'])) {
+        // se agrego margen ingerior y superior"
         $message = "<div class='my-2 alert alert-" . ($_SESSION['message_type'] === "success" ? "success" : "danger") . "'>" 
                 . $_SESSION['message'] . 
                 "</div>";
@@ -19,6 +20,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar Sesion</title>
     <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/login.css">
 </head>
@@ -34,7 +36,7 @@
 
                         <!-- Switch for Persona/Empresa -->
                         <div class="form-check form-switch mb-3">
-                            <input class="form-check-input" type="checkbox" id="userTypeSwitch">
+                            <input class="form-check-input" type="checkbox" id="userTypeSwitch" name="userTypeSwitch">
                             <label class="form-check-label" for="userTypeSwitch">Empresa</label>
                         </div>
 
@@ -88,6 +90,10 @@
                             <div class="mb-3 d-none" id="description-field">
                                 <label for="description" class="form-label">Descripción de la Empresa</label>
                                 <textarea class="form-control" id="description" rows="3" name="description"></textarea>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <input type="hidden" id="userType" name="userType" value="persona">
+                                <a href="#" id="logeate-link" class="text-primary ">¿Ya tienes cuenta? Logeate</a>
                             </div>
                             <button type="submit" class="btn btn-success mt-3 w-100">Registrarse</button>
                         </form>
