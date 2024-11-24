@@ -6,6 +6,7 @@
     <title>Iniciar Sesion</title>
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/login.css">
 </head>
 <body>
     <div class="container Fondo-principal">
@@ -24,7 +25,7 @@
                         </div>
 
                         <!-- Login Form -->
-                        <form id="login-form">
+                        <form id="login-form" method="post" action="ingresar.php">
                             <div class="mb-3">
                                 <label for="email" class="form-label">Correo Electrónico</label>
                                 <input type="email" class="form-control" id="email" required>
@@ -41,7 +42,7 @@
                         </form>
 
                         <!-- Register Form -->
-                        <form id="register-form" class="d-none">
+                        <form id="register-form" class="d-none" method="post" action="registrar.php">
                             <div class="mb-3" id="name-field">
                                 <label for="name" class="form-label">Nombre</label>
                                 <input type="text" class="form-control" id="name" required>
@@ -78,47 +79,6 @@
         </section>
     </div>
     <script src="../js/bootstrap.bundle.min.js"></script>
-    <script>
-        const userTypeSwitch = document.getElementById('userTypeSwitch');
-        const registerLink = document.getElementById('register-link');
-        const loginForm = document.getElementById('login-form');
-        const registerForm = document.getElementById('register-form');
-        const formTitle = document.getElementById('form-title');
-        const overlayText = document.getElementById('overlay-text');
-        const nameField = document.getElementById('name-field');
-        const dniCuitField = document.getElementById('dni-cuit-field');
-        const descriptionField = document.getElementById('description-field');
-
-        // Toggle Persona/Empresa Fields
-        userTypeSwitch.addEventListener('change', () => {
-            if (userTypeSwitch.checked) {
-                dniCuitField.querySelector('label').innerText = 'CUIT';
-                dniCuitField.querySelector('input').placeholder = 'Ingrese el CUIT';
-                nameField.querySelector('label').innerText = 'Nombre o Razón Social';
-                descriptionField.classList.remove('d-none');
-            } else {
-                dniCuitField.querySelector('label').innerText = 'DNI';
-                dniCuitField.querySelector('input').placeholder = 'Ingrese el DNI';
-                nameField.querySelector('label').innerText = 'Nombre';
-                descriptionField.classList.add('d-none');
-            }
-        });
-
-        // Toggle Between Login and Register Forms
-        registerLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            if (loginForm.classList.contains('d-none')) {
-                loginForm.classList.remove('d-none');
-                registerForm.classList.add('d-none');
-                formTitle.innerText = 'Iniciar Sesión';
-                overlayText.innerText = 'Bienvenido nuevamente';
-            } else {
-                loginForm.classList.add('d-none');
-                registerForm.classList.remove('d-none');
-                formTitle.innerText = 'Registrarse';
-                overlayText.innerText = 'Gracias por confiar en nosotros';
-            }
-        });
-    </script>
+    <script src="../js/login.js"></script>
 </body>
 </html>
