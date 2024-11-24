@@ -2,8 +2,9 @@
 
   <div class="container-fluid">
 
-    <a class="navbar-brand text-success Sinergia" href="#">Sinergia
-        <img class="gif-ventilador" src="./assets/gif-imagen.gif" alt="Ventilador en movimiento" />
+    <a class="navbar-brand text-success Sinergia" href="#">
+        Sinergia
+        <span class="gif-ventilador"></span>
     </a>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
