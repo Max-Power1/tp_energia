@@ -1,0 +1,16 @@
+.texto-destacado {
+    font-family: 'Arial', sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #495057;
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-left: 5px solid #0d6efd; /* Línea decorativa */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.contenedor-ajustado {
+    overflow: hidden; /* Oculta cualquier contenido que sobresalga */
+    word-wrap: break-word; /* Ajusta las palabras largas */
+    max-width: 90%; /* Asegura que no exceda el ancho del contenedor */
+}
