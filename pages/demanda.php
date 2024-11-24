@@ -28,7 +28,7 @@
             <div class="file-name">Base de datos información por región</div>
             <div class="file-date">22/11/2024</div>
             <div class="download-btn-container">
-                <a href="archivosDemanda\Base de datos GU Semanal.zip" download>
+                <a href="../archivosDemanda\Base de datos GU Semanal.zip" download>
                     <button class="download-btn">Descargar</button>
                 </a>
             </div>
@@ -37,7 +37,7 @@
             <div class="file-name">Análisis Demanda Grandes Usuarios</div>
             <div class="file-date">22/11/2024</div>
             <div class="download-btn-container">
-                <a href="archivosDemanda\Análisis Semanal Grandes Usuarios.pdf" download>
+                <a href="../archivosDemanda\Análisis Semanal Grandes Usuarios.pdf" download>
                     <button class="download-btn">Descargar</button>
                 </a>
             </div>
@@ -46,7 +46,7 @@
             <div class="file-name">Base Demanda Diaria 2017 2024</div>
             <div class="file-date">15/11/2024</div>
             <div class="download-btn-container">
-                <a href="archivosDemanda\Base Demanda Diaria 2017 2024.zip" download>
+                <a href="../archivosDemanda\Base Demanda Diaria 2017 2024.zip" download>
                     <button class="download-btn">Descargar</button>
                 </a>
             </div>
@@ -55,7 +55,7 @@
             <div class="file-name">EVOLUCIÓN DE LA DEMANDA POR RAMA Y ACTIVIDAD 2024 – 10</div>
             <div class="file-date">14/11/2024</div>
             <div class="download-btn-container">
-                <a href="archivosDemanda\EVOLUCIÓN DE LA DEMANDA POR RAMA Y ACTIVIDAD 2024 - 10.pdf" download>
+                <a href="../archivosDemanda\EVOLUCIÓN DE LA DEMANDA POR RAMA Y ACTIVIDAD 2024 - 10.pdf" download>
                     <button class="download-btn">Descargar</button>
                 </a>
             </div>
@@ -64,7 +64,7 @@
             <div class="file-name">Demanda 2024 – 10</div>
             <div class="file-date">14/11/2024</div>
             <div class="download-btn-container">
-                <a href="archivosDemanda\Demanda 2024 - 10.pdf" download>
+                <a href="../archivosDemanda\Demanda 2024 - 10.pdf" download>
                     <button class="download-btn">Descargar</button>
                 </a>
             </div>
