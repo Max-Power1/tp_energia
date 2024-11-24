@@ -153,10 +153,12 @@ nav {
 }
 
 .gif-ventilador {
-    display: inline-block; /* Asegura que el GIF esté al lado del texto */
-    vertical-align: middle; /* Alinea el GIF al centro de la línea de texto */
-    margin-left: 10px; /* Deja un pequeño espacio entre la palabra y el GIF */
-    width: 30px; /* Ajusta el tamaño del GIF */
-    height: auto; /* Mantiene la proporción del GIF */
+    background: url('../assets/turbina.gif') no-repeat center center; /* Carga el GIF como fondo */
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 5px;
+    width: 70px;
+    height: 70px; /* Asegúrate de definir un tamaño específico */
+    background-size: contain; /* Ajusta el tamaño del GIF */
 }
 
