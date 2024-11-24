@@ -55,7 +55,7 @@
                                 <a href="#" id="register-link" class="link-secondary">¿No tienes cuenta? Regístrate</a>
                             </div>
                             <button type="submit" class="btn btn-primary mt-3 w-100">Ingresar</button>
-                            <input type="hidden" id="userType" name="userLogin" value="persona">
+                            <input type="hidden" id="userLogin" name="userLogin" value="persona">
                         </form>
 
                         <!-- Mostrar mensaje -->
