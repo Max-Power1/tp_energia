@@ -36,7 +36,7 @@
 
                         <!-- Switch for Persona/Empresa -->
                         <div class="form-check form-switch mb-3">
-                            <input class="form-check-input" type="checkbox" id="userTypeSwitch" name="userTypeSwitch">
+                            <input class="form-check-input" type="checkbox" id="userTypeSwitch">
                             <label class="form-check-label" for="userTypeSwitch">Empresa</label>
                         </div>
 
@@ -44,17 +44,18 @@
                         <form id="login-form" method="post" action="ingresar.php">
                             <div class="mb-3">
                                 <label for="email" class="form-label">Correo Electrónico</label>
-                                <input type="email" class="form-control" id="email" required>
+                                <input type="email" class="form-control" id="email" name="email" required>
                             </div>
                             <div class="mb-3">
                                 <label for="password" class="form-label">Contraseña</label>
-                                <input type="password" class="form-control" id="password" required>
+                                <input type="password" class="form-control" id="password" name="password" required>
                             </div>
                             <div class="d-flex justify-content-between">
                                 <a href="#" class="link-primary">Recuperar contraseña</a>
                                 <a href="#" id="register-link" class="link-secondary">¿No tienes cuenta? Regístrate</a>
                             </div>
                             <button type="submit" class="btn btn-primary mt-3 w-100">Ingresar</button>
+                            <input type="hidden" id="userType" name="userLogin" value="persona">
                         </form>
 
                         <!-- Mostrar mensaje -->

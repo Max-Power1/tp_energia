@@ -92,6 +92,7 @@ function validatePassword() {
 // para pasar estado de tabla al servidor
 userTypeSwitch.addEventListener('change', () => {
     document.getElementById('userType').value = userTypeSwitch.checked ? 'empresa' : 'persona';
-    console.log(userTypeSwitch.value);
-    
+    // console.log(userTypeSwitch.value);
+    document.getElementById('userLogin').value = userTypeSwitch.checked ? 'empresa' : 'persona';
 });
+

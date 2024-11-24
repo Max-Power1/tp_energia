@@ -37,10 +37,33 @@
         <li class="nav-item">
           <a class="nav-link" href="./login.php">Login</a>
         </li>
+
+        <!-- Avatar con nombre de usuario y logout -->
+        <?php if (isset($_SESSION['id_usuario'])): ?>
+          <!-- Si la sesión está activa, mostramos el dropdown con el nombre del usuario -->
+          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="fa-solid fa-user-tie text-dark"></i>
+                  <!-- Mostrar el nombre del usuario almacenado en la sesión -->
+                  <span class="ms-2 text-dark"><?php echo $_SESSION['nombre']; ?></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item" href="#">Perfil</a></li>
+                  <li><a class="dropdown-item" href="#">Ajustes</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <!-- Enlazar con el script que cierre la sesión -->
+                  <li><a class="dropdown-item" href="logout.php">Cerrar Sesión</a></li>
+              </ul>
+          </li>
+        <?php else: ?>
+          <!-- Si no hay sesión, no mostramos el dropdown -->
+          <!-- Aquí puedes poner algún enlace de login si lo deseas -->
+        <?php endif; ?>
+
       </ul>
 
 
-      <!-- Avatar con nombre de usuario y logout -->
+      <!-- Avatar con nombre de usuario y logout
       <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="fa-solid fa-user-tie text-dark"></i>
@@ -52,7 +75,9 @@
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="#">Cerrar Sesion</a></li>
           </ul>
-        </li>
+        </li> -->
+
+
 
       <!-- <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
