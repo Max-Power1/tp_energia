@@ -1,4 +1,4 @@
-<table class="table">
+<table class="table menu">
   <thead>
     <tr>
       <th scope="col">id_proyecto</th>

@@ -1,3 +1,26 @@
+.texto-destacado {
+    font-family: 'Arial', sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #495057;
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-left: 5px solid #0d6efd; /* Línea decorativa */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 0 auto; /* Centra el contenedor */
+    width: 90%; /* Ajusta el ancho */
+}
+
+.contenedor-ajustado {
+    display: flex;
+    justify-content: center; /* Centra el contenido horizontalmente */
+    align-items: center;     /* Centra el contenido verticalmente */
+    height: 100%;            /* Asegura que el contenedor ocupe toda la altura disponible */
+    padding: 20px;
+}
+
+
 .download-image {
     max-width: 100%; /* Ajusta el tamaño de la imagen al contenedor */
     height: auto; /* Mantiene las proporciones de la imagen */
@@ -30,7 +53,7 @@
 /* Estilo de los elementos */
 .file-name, .file-date, .download-btn-container {
     padding: 10px;
-    background-color: #f8f8f8;
+    background-color: #465e90;
     border-radius: 5px;
     text-align: center;
     font-size: 14px;
@@ -55,7 +78,7 @@
     grid-template-columns: 2fr 1fr 1fr; /* Tres columnas para el encabezado */
     gap: 10px;
     font-weight: bold;  /* Hacemos que el texto del encabezado sea negrita */
-    background-color: #f0f0f0;
+    background-color: #dfdfdf;
     padding: 10px;
     border-radius: 5px;
 }

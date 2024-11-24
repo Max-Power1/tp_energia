@@ -23,8 +23,26 @@ document.addEventListener("DOMContentLoaded", function () {
             options: {
                 responsive: true,
                 scales: {
-                    x: { display: true, title: { display: true, text: 'Hora' } },
-                    y: { display: true, title: { display: true, text: type === 'line' ? 'Demanda (MW)' : 'Generación (MW)' } }
+                    x: { 
+                        display: true, 
+                        title: { display: true, text: 'Hora' },
+                        grid: {
+                            color: 'black', // Color de las líneas de la cuadrícula en el eje X
+                        },
+                        ticks: {
+                            color: 'black', // Color de los números del eje X
+                        }
+                    },
+                    y: { 
+                        display: true, 
+                        title: { display: true, text: type === 'line' ? 'Demanda (MW)' : 'Generación (MW)' },
+                        grid: {
+                            color: 'black', // Color de las líneas de la cuadrícula en el eje Y
+                        },
+                        ticks: {
+                            color: 'black', // Color de los números del eje Y
+                        }
+                    }
                 }
             }
         });

@@ -9,12 +9,12 @@
     <link rel="stylesheet" href="../css/styleGeneracion.css">
 </head>
 <body>
-    <div class="container bg-primary-subtle">
+    <div class="container Fondo-principal">
         <!-- Menú de navegación -->
         <?php include '../drivers/menuPages.php'; ?>
 
         <!-- Título principal -->
-        <h1 class="text-center text-primary">Generacion</h1>
+        <h1 class="text-center text-primary">Generación</h1>
 
         <!-- Texto adicional -->
         <div class="row mt-5">
