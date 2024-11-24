@@ -1,3 +1,17 @@
+<?php
+    // Iniciar sesión para acceder a mensajes
+    session_start();
+
+    // Mostrar mensajes si existen
+    $message = "";
+    if (isset($_SESSION['message'])) {
+        $message = "<div class='my-2 alert alert-" . ($_SESSION['message_type'] === "success" ? "success" : "danger") . "'>" 
+                . $_SESSION['message'] . 
+                "</div>";
+        unset($_SESSION['message']);
+        unset($_SESSION['message_type']);
+    }
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -41,27 +55,39 @@
                             <button type="submit" class="btn btn-primary mt-3 w-100">Ingresar</button>
                         </form>
 
+                        <!-- Mostrar mensaje -->
+                        <?php echo $message; ?>
                         <!-- Register Form -->
                         <form id="register-form" class="d-none" method="post" action="registrar.php">
                             <div class="mb-3" id="name-field">
-                                <label for="name" class="form-label">Nombre</label>
-                                <input type="text" class="form-control" id="name" required>
+                                <label for="name" class="form-label">Nombre y Apellido</label>
+                                <input type="text" class="form-control" id="name" name="name" required>
                             </div>
                             <div class="mb-3">
                                 <label for="register-email" class="form-label">Correo Electrónico</label>
-                                <input type="email" class="form-control" id="register-email" required>
+                                <input type="email" class="form-control" id="register-email" name="register-email" required>
                             </div>
                             <div class="mb-3" id="dni-cuit-field">
                                 <label for="dni-cuit" class="form-label">DNI</label>
-                                <input type="text" class="form-control" id="dni-cuit" required>
+                                <input type="text" class="form-control" id="dni-cuit" name="dni-cuit" required>
                             </div>
                             <div class="mb-3">
                                 <label for="register-password" class="form-label">Contraseña</label>
-                                <input type="password" class="form-control" id="register-password" required>
+                                <input 
+                                    type="password" 
+                                    class="form-control" 
+                                    id="register-password" 
+                                    name="register-password" 
+                                    required 
+                                    minlength="10"
+                                    oninput="validatePassword()">
+                                <small id="password-help" class="form-text text-danger d-none">
+                                    La contraseña debe tener al menos 10 caracteres, incluyendo una mayúscula, una minúscula y un número.
+                                </small>
                             </div>
                             <div class="mb-3 d-none" id="description-field">
                                 <label for="description" class="form-label">Descripción de la Empresa</label>
-                                <textarea class="form-control" id="description" rows="3"></textarea>
+                                <textarea class="form-control" id="description" rows="3" name="description"></textarea>
                             </div>
                             <button type="submit" class="btn btn-success mt-3 w-100">Registrarse</button>
                         </form>

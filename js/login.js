@@ -38,3 +38,38 @@ registerLink.addEventListener('click', (e) => {
         overlayText.innerText = 'Gracias por confiar en nosotros';
     }
 });
+
+// Validacion de l contraseña con expresion regular
+function validatePassword() {
+    const passwordInput = document.getElementById('register-password');
+    const helpText = document.getElementById('password-help');
+  
+    // Define las reglas
+    const minLength = /.{10,}/; // Al menos 10 caracteres
+    const hasUpperCase = /[A-Z]/; // Al menos una letra mayúscula
+    const hasLowerCase = /[a-z]/; // Al menos una letra minúscula
+    const hasNumber = /[0-9]/;    // Al menos un número
+  
+    // Toma el valor actual del input
+    const password = passwordInput.value;
+  
+    // Verifica las condiciones
+    const isValid =
+      minLength.test(password) &&
+      hasUpperCase.test(password) &&
+      hasLowerCase.test(password) &&
+      hasNumber.test(password);
+  
+    // Actualiza el mensaje dinámicamente
+    if (isValid) {
+      helpText.textContent = 'Contraseña válida ✅';
+      helpText.classList.remove('text-danger');
+      helpText.classList.add('text-success');
+    } else {
+      helpText.textContent = 'La contraseña debe tener 10 caracteres, incluyendo una mayúscula, una minúscula y un número.';
+      helpText.classList.remove('text-success');
+      helpText.classList.remove('d-none');
+      helpText.classList.add('text-danger');
+    }
+  }
+  
