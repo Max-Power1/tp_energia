@@ -10,7 +10,7 @@
 <body>
     <div class="container bg-primary-subtle">
         <?php include '../drivers/menuPages.php'; ?>
-        <h1 class="text-center">PROYECTOS</h1>
+        <h1 class="text-center Titulo">PROYECTOS</h1>
 
         <?php include("../drivers/tabla_proyectos.php") ?>
 

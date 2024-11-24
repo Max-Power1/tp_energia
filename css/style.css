@@ -6,4 +6,18 @@
 
 .container{
     min-height: 100vh;
+
 }
+
+/************************
+
+*************************/
+
+/* Cambiar el color del título */
+.Titulo {
+    color: #2a9d8f; /* Verde azulado */
+    font-weight: bold; /* Negrita */
+    font-family: 'Arial', sans-serif; /* Fuente personalizada */
+}
+
+
