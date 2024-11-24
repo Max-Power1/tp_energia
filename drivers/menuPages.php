@@ -8,7 +8,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <div class="collapse navbar-collapse menu" id="navbarSupportedContent">
 
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         <li class="nav-item">

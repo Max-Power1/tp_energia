@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-    <div class="container bg-primary-subtle">
+    <div class="container Fondo-principal">
         <?php include '../drivers/menuPages.php'; ?>
         <section class="container my-5">
             <div class="row g-4">

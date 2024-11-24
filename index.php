@@ -9,7 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <div class="container bg-primary-subtle">
+    <div class="container Fondo-principal">
         <?php include './drivers/menuIndex.php'; ?>
 
         <h1>Demanda en tiempo real en la Republica Argentina</h1>
@@ -19,7 +19,7 @@
         <?php include("./components/form_filtros.php"); ?>
 
         <!-- Contenedor para el Gráfico -->
-        <div>
+        <div class= "contenedor-grafico">
             <canvas id="energyChart"></canvas>
         </div>
 
