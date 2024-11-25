@@ -7,6 +7,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    padding-top: 20px;
 }
 .image-container .overlay-text {
     position: absolute;

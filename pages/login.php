@@ -103,7 +103,7 @@
 
                 <!-- Right Image Section -->
                 <div class="col-md-6">
-                    <div class="image-container">
+                    <div class="image-container mt-3">
                         <img src="../assets/fondo-login.avif" alt="Fondo">
                         <div class="overlay-text" id="overlay-text">Bienvenido nuevamente</div>
                     </div>

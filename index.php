@@ -14,7 +14,7 @@
     <div class="container Fondo-principal">
         <?php include './drivers/menuIndex.php'; ?>
 
-        <h1>Demanda en tiempo real en la Republica Argentina</h1>
+        <h1 class="mt-3">Demanda en tiempo real en la Republica Argentina</h1>
         <h3>Demanda Real (MW) - Temp. Promedio de GBA y Litoral °C</h3>
 
         <!-- Formulario de Selección -->

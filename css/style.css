@@ -23,7 +23,7 @@ h1::before,
 h1::after {
     content: "";
     flex: 1;
-    height: 2px;
+    /* height: 2px; */
     background-color: #000000;
     margin: 0 10px;
 }

@@ -61,7 +61,7 @@ if (isset($_SESSION['message'])) {
 <body>
     <div class="container Fondo-principal">
         <?php include '../drivers/menuPages.php'; ?>
-        <h1 class="mb-4">Listado de Proyectos</h1>
+        <h1 class="mb-4 mt-3">Listado de Proyectos</h1>
         <!-- Mostrar mensaje -->
         <?php echo $message; ?>
         <!-- Tabla -->

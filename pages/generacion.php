@@ -16,7 +16,7 @@
         <?php include '../drivers/menuPages.php'; ?>
 
         <!-- Título principal -->
-        <h1 class="text-center text-primary">Generación</h1>
+        <h1 class="text-center text-primary mt-3">Generación</h1>
 
         <!-- Texto adicional -->
         <div class="row mt-5">

@@ -62,7 +62,7 @@ $conn->close();
 <body>
     <div class="container Fondo-principal">
         <?php include '../drivers/menuPages.php'; ?>
-        <h1 class="mb-4">Proyección de Proyectos</h1>
+        <h1 class="mb-4 mt-3">Proyección de Proyectos</h1>
         
         <!-- Mostrar mensaje -->
         <?php echo $message; ?>
