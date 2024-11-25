@@ -1,60 +1,61 @@
 <?php
-    session_start();
-    include './conexion.php';
+session_start();
+include './conexion.php';
 
-    if ($conn->connect_error) {
-        die("Error de conexión: " . $conn->connect_error);
-    }
+if ($conn->connect_error) {
+    die("Error de conexión: " . $conn->connect_error);
+}
 
-    // Consulta para obtener los proyectos con los nombres de las relaciones
-    $query = "
-        SELECT 
-            p.id_proyecto, 
-            e.nombre AS empresa, 
-            p.nombre AS proyecto, 
-            p.fecha, 
-            p.suma_total, 
-            p.hidraulica, 
-            p.termica, 
-            p.nuclear, 
-            p.renovable, 
-            r.nombre AS region, 
-            es.nombre AS estado
-        FROM proyectos p
-        JOIN empresas e ON p.id_empresa = e.id_empresa
-        JOIN regiones r ON p.region = r.id_regiones
-        JOIN estados es ON p.estado = es.id_estados
-        ORDER BY p.id_proyecto ASC
-    ";
-    $result = $conn->query($query);
+// Consulta para obtener los proyectos con los nombres de las relaciones
+$query = "
+    SELECT 
+        p.id_proyecto, 
+        e.id_empresa, 
+        e.nombre AS empresa, 
+        p.nombre AS proyecto, 
+        p.fecha, 
+        p.suma_total, 
+        p.hidraulica, 
+        p.termica, 
+        p.nuclear, 
+        p.renovable, 
+        r.nombre AS region, 
+        es.nombre AS estado
+    FROM proyectos p
+    JOIN empresas e ON p.id_empresa = e.id_empresa
+    JOIN regiones r ON p.region = r.id_regiones
+    JOIN estados es ON p.estado = es.id_estados
+    ORDER BY p.id_proyecto ASC
+";
+$result = $conn->query($query);
 
-    // Almacenar los datos en un array para la tabla y el gráfico
-    $proyectos = [];
-    while ($row = $result->fetch_assoc()) {
-        $proyectos[] = $row;
-    }
-    // Cerrar conexión
-    $conn->close();
+// Almacenar los datos en un array para la tabla y el gráfico
+$proyectos = [];
+while ($row = $result->fetch_assoc()) {
+    $proyectos[] = $row;
+}
+// Cerrar conexión
+$conn->close();
 
-    // Mostrar mensajes si existen
-    $message = "";
-    if (isset($_SESSION['message'])) {
-        $message = "<div class='my-2 alert alert-" . ($_SESSION['message_type'] === "success" ? "success" : "danger") . "'>" 
-                . $_SESSION['message'] . 
-                "</div>";
-        unset($_SESSION['message']);
-        unset($_SESSION['message_type']);
-    }
+// Mostrar mensajes si existen
+$message = "";
+if (isset($_SESSION['message'])) {
+    $message = "<div class='my-2 alert alert-" . ($_SESSION['message_type'] === "success" ? "success" : "danger") . "'>" 
+            . $_SESSION['message'] . 
+            "</div>";
+    unset($_SESSION['message']);
+    unset($_SESSION['message_type']);
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Demanda</title>
+    <title>Listado de Proyectos</title>
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
@@ -71,7 +72,6 @@
                         <th>Proyecto</th>
                         <th>Empresa</th>
                         <th>Nombre del Proyecto</th>
-                        <!-- <th>Fecha</th> -->
                         <th>Suma Total (MW)</th>
                         <th>Hidráulica (MW)</th>
                         <th>Térmica (MW)</th>
@@ -79,6 +79,10 @@
                         <th>Renovable (MW)</th>
                         <th>Región</th>
                         <th>Estado</th>
+                        <!-- Columna "Acciones" visible solo para empresas -->
+                        <?php if (isset($_SESSION['tipo']) && $_SESSION['tipo'] === 'empresa'): ?>
+                            <th>Acciones</th>
+                        <?php endif; ?>
                     </tr>
                 </thead>
                 <tbody>
@@ -87,7 +91,6 @@
                             <td><?= $proyecto['id_proyecto'] ?></td>
                             <td><?= $proyecto['empresa'] ?></td>
                             <td><?= $proyecto['proyecto'] ?></td>
-                            <!-- <td> $proyecto['fecha'] </td> -->
                             <td><?= $proyecto['suma_total'] ?></td>
                             <td><?= $proyecto['hidraulica'] ?></td>
                             <td><?= $proyecto['termica'] ?></td>
@@ -95,6 +98,15 @@
                             <td><?= $proyecto['renovable'] ?></td>
                             <td><?= $proyecto['region'] ?></td>
                             <td><?= $proyecto['estado'] ?></td>
+                            <!-- Botón "Editar" solo visible para empresas -->
+                            <?php if (isset($_SESSION['tipo']) && $_SESSION['tipo'] === 'empresa'): ?>
+                                <td>
+                                    <a href="editar_proyecto.php?id=<?= $proyecto['id_proyecto'] ?>" 
+                                       class="btn btn-sm <?= ($proyecto['id_empresa'] == $_SESSION['id_usuario']) ? 'btn-warning' : 'btn-secondary disabled' ?>">
+                                        Editar
+                                    </a>
+                                </td>
+                            <?php endif; ?>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
@@ -109,9 +121,8 @@
         <!-- Gráfico -->
         <h2 class="my-4">Gráfico de Proyectos por Tipo de Energía</h2>
         <canvas id="chartProyectos" width="400" height="200"></canvas>
-        </div>
-
     </div>
+
     <script src="../js/bootstrap.bundle.min.js"></script>
     <script>
         // Preparar los datos para el gráfico
