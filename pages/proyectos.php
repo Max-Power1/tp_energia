@@ -24,6 +24,7 @@
         JOIN empresas e ON p.id_empresa = e.id_empresa
         JOIN regiones r ON p.region = r.id_regiones
         JOIN estados es ON p.estado = es.id_estados
+        ORDER BY p.id_proyecto ASC
     ";
     $result = $conn->query($query);
 
@@ -32,9 +33,18 @@
     while ($row = $result->fetch_assoc()) {
         $proyectos[] = $row;
     }
-
     // Cerrar conexión
     $conn->close();
+
+    // Mostrar mensajes si existen
+    $message = "";
+    if (isset($_SESSION['message'])) {
+        $message = "<div class='my-2 alert alert-" . ($_SESSION['message_type'] === "success" ? "success" : "danger") . "'>" 
+                . $_SESSION['message'] . 
+                "</div>";
+        unset($_SESSION['message']);
+        unset($_SESSION['message_type']);
+    }
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -51,7 +61,8 @@
     <div class="container Fondo-principal">
         <?php include '../drivers/menuPages.php'; ?>
         <h1 class="mb-4">Listado de Proyectos</h1>
-
+        <!-- Mostrar mensaje -->
+        <?php echo $message; ?>
         <!-- Tabla -->
         <div class="table-responsive">
             <table class="table table-striped table-hover">

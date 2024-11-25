@@ -1,4 +1,50 @@
-<?php session_start(); ?>
+<?php
+    session_start();
+    include './conexion.php';
+
+    if ($conn->connect_error) {
+        die("Error de conexión: " . $conn->connect_error);
+    }
+
+    // Mostrar mensajes si existen
+    $message = "";
+    if (isset($_SESSION['message'])) {
+        $message = "<div class='my-2 alert alert-" . ($_SESSION['message_type'] === "success" ? "success" : "danger") . "'>" 
+                . $_SESSION['message'] . 
+                "</div>";
+        unset($_SESSION['message']);
+        unset($_SESSION['message_type']);
+    }
+
+    // Consulta para obtener proyectos con estado distinto a "Completado" o "Terminado"
+    $query = "
+        SELECT 
+            p.id_proyecto, 
+            p.nombre AS proyecto, 
+            p.fecha, 
+            p.suma_total, 
+            p.hidraulica, 
+            p.termica, 
+            p.nuclear, 
+            p.renovable, 
+            r.nombre AS region, 
+            es.nombre AS estado
+        FROM proyectos p
+        JOIN regiones r ON p.region = r.id_regiones
+        JOIN estados es ON p.estado = es.id_estados
+        WHERE es.nombre NOT IN ('Completado', 'Terminado')
+    ";
+    $result = $conn->query($query);
+
+    // Almacenar los datos en un array para la tabla
+    $proyectos = [];
+    while ($row = $result->fetch_assoc()) {
+        $proyectos[] = $row;
+    }
+
+    // Cerrar conexión
+    $conn->close();
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
