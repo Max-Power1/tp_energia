@@ -1,9 +1,11 @@
 <?php
+    // Iniciar sesión para acceder a mensajes
     session_start();
 
     // Mostrar mensajes si existen
     $message = "";
     if (isset($_SESSION['message'])) {
+        // se agrego margen ingerior y superior"
         $message = "<div class='my-2 alert alert-" . ($_SESSION['message_type'] === "success" ? "success" : "danger") . "'>" 
                 . $_SESSION['message'] . 
                 "</div>";
@@ -16,7 +18,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciar Sesión</title>
+    <title>Iniciar Sesion</title>
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="../css/style.css">
@@ -33,8 +35,7 @@
                         <h2 id="form-title" class="mb-3">Iniciar Sesión</h2>
 
                         <!-- Switch for Persona/Empresa -->
-                        <div class="form-check form-switch mb-3 align-items-center">
-                            <label class="form-check-label" for="userTypeSwitch">Persona</label> 
+                        <div class="form-check form-switch mb-3">
                             <input class="form-check-input" type="checkbox" id="userTypeSwitch">
                             <label class="form-check-label" for="userTypeSwitch">Empresa</label>
                         </div>
@@ -59,7 +60,6 @@
 
                         <!-- Mostrar mensaje -->
                         <?php echo $message; ?>
-
                         <!-- Register Form -->
                         <form id="register-form" class="d-none" method="post" action="registrar.php">
                             <div class="mb-3" id="name-field">
@@ -94,7 +94,7 @@
                             </div>
                             <div class="d-flex justify-content-between">
                                 <input type="hidden" id="userType" name="userType" value="persona">
-                                <a href="#" id="logeate-link" class="text-primary">¿Ya tienes cuenta? Logeate</a>
+                                <a href="#" id="logeate-link" class="text-primary ">¿Ya tienes cuenta? Logeate</a>
                             </div>
                             <button type="submit" class="btn btn-success mt-3 w-100">Registrarse</button>
                         </form>

@@ -1,6 +1,6 @@
 const userTypeSwitch = document.getElementById('userTypeSwitch');
 const registerLink = document.getElementById('register-link');
-const logeateLink = document.getElementById('logeate-link'); // Permutar logeo
+const logeateLink = document.getElementById('logeate-link') // permutar logeo
 const loginForm = document.getElementById('login-form');
 const registerForm = document.getElementById('register-form');
 const formTitle = document.getElementById('form-title');
@@ -55,7 +55,7 @@ logeateLink.addEventListener('click', (e) => {
     }
 });
 
-// Validación de la contraseña con expresión regular
+// Validacion de l contraseña con expresion regular
 function validatePassword() {
     const passwordInput = document.getElementById('register-password');
     const helpText = document.getElementById('password-help');
@@ -64,13 +64,35 @@ function validatePassword() {
     const minLength = /.{10,}/; // Al menos 10 caracteres
     const hasUpperCase = /[A-Z]/; // Al menos una letra mayúscula
     const hasLowerCase = /[a-z]/; // Al menos una letra minúscula
-    const hasNumber = /[0-9]/; // Al menos un número
+    const hasNumber = /[0-9]/;    // Al menos un número
 
-    // Verifica si todas las reglas se cumplen
-    if (minLength.test(passwordInput.value) && hasUpperCase.test(passwordInput.value) &&
-        hasLowerCase.test(passwordInput.value) && hasNumber.test(passwordInput.value)) {
-        helpText.classList.add('d-none');
+    // Toma el valor actual del input
+    const password = passwordInput.value;
+
+    // Verifica las condiciones
+    const isValid =
+        minLength.test(password) &&
+        hasUpperCase.test(password) &&
+        hasLowerCase.test(password) &&
+        hasNumber.test(password);
+
+    // Actualiza el mensaje dinámicamente
+    if (isValid) {
+        helpText.textContent = 'Contraseña válida ✅';
+        helpText.classList.remove('text-danger');
+        helpText.classList.add('text-success');
     } else {
+        helpText.textContent = 'La contraseña debe tener 10 caracteres, incluyendo una mayúscula, una minúscula y un número.';
+        helpText.classList.remove('text-success');
         helpText.classList.remove('d-none');
+        helpText.classList.add('text-danger');
     }
 }
+  
+// para pasar estado de tabla al servidor
+userTypeSwitch.addEventListener('change', () => {
+    document.getElementById('userType').value = userTypeSwitch.checked ? 'empresa' : 'persona';
+    // console.log(userTypeSwitch.value);
+    document.getElementById('userLogin').value = userTypeSwitch.checked ? 'empresa' : 'persona';
+});
+

@@ -98,8 +98,8 @@ if (isset($_SESSION['message'])) {
                             <td><?= $proyecto['renovable'] ?></td>
                             <td><?= $proyecto['region'] ?></td>
                             <td><?= $proyecto['estado'] ?></td>
-                            <!-- Botón "Editar" solo visible para empresas -->
-                            <?php if (isset($_SESSION['tipo']) && $_SESSION['tipo'] === 'empresa'): ?>
+                                                        <!-- Botón "Editar" solo visible para empresas -->
+                                                        <?php if (isset($_SESSION['tipo']) && $_SESSION['tipo'] === 'empresa'): ?>
                                 <td>
                                     <a href="editar_proyecto.php?id=<?= $proyecto['id_proyecto'] ?>" 
                                        class="btn btn-sm <?= ($proyecto['id_empresa'] == $_SESSION['id_usuario']) ? 'btn-warning' : 'btn-secondary disabled' ?>">
