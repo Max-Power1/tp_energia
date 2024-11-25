@@ -89,7 +89,7 @@ $conn->close();
                     <?php foreach ($proyectos as $proyecto): ?>
                         <tr>
                             <td><?= $proyecto['id_proyecto'] ?></td>
-                            <td><?= $proyecto['proyecto'] ?></td>
+                            <td class="nombreProyecto"><?= $proyecto['proyecto'] ?></td>
                             <td><?= $proyecto['fecha'] ?></td>
                             <td><?= $proyecto['suma_total'] ?></td>
                             <td><?= $proyecto['hidraulica'] ?></td>
@@ -109,7 +109,7 @@ $conn->close();
 
         <!-- Sección para mostrar el gráfico detallado -->
         <div id="grafico-detallado" class="mt-5" style="display: none;">
-            <h2>Gráfico Detallado del Proyecto</h2>
+            <h2 id="tituloGrafico">Gráfico Detallado del Proyecto</h2>
             <canvas id="graficoProyecto" width="400" height="200"></canvas>
         </div>
     </div>
@@ -117,16 +117,22 @@ $conn->close();
     <script src="../js/bootstrap.bundle.min.js"></script>
 
     <script>
+        // const nombreProyecto = document.querySelector(".nombreProyecto").textContent;
+        // const tituloGrafico = document.querySelector("#tituloGrafico");
+        // console.log(nombreProyecto);
+        
         // Event listener para alternar la visibilidad del gráfico detallado
         document.querySelectorAll('.btn-visualizar').forEach(button => {
             button.addEventListener('click', function () {
+                const nombreProyecto = this.closest('tr').querySelector('.nombreProyecto').textContent;
+                const tituloGrafico = document.querySelector("#tituloGrafico");
                 const idRegion = this.dataset.id; // Obtener el ID de la región del botón
                 const graficoSeccion = document.getElementById('grafico-detallado'); // Seleccionar la sección del gráfico
                 
                 // Alternar visibilidad
                 if (graficoSeccion.style.display === 'none' || graficoSeccion.style.display === '') {
                     graficoSeccion.style.display = 'block'; // Mostrar gráfico
-
+                    tituloGrafico.textContent = `Gráfico Detallado del Proyecto: ${nombreProyecto}`
                     graficar(idRegion);
 
                     console.log("Proyecto seleccionado: " + idRegion);
