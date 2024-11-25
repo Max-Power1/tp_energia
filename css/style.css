@@ -4,11 +4,27 @@
     box-sizing: border-box; /* Cambié a border-box para un mejor comportamiento */
 }
 
+/* Contenedor del menú */
+.navbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    /* Otros estilos para el menú */
+}
+
+.image-container {
+    margin-top: 50px; /* Ajusta este valor según tus necesidades */
+}
+
+
 /* Cambiar el color del título */
 h1, h2, h3 {
     color: #000000;
     font-weight: bold;
     font-family: 'Arial', sans-serif;
+    z-index: 999;
 }
 
 
@@ -19,14 +35,7 @@ h1, h2, h3 {
     justify-content: center;
 }
 
-h1::before,
-h1::after {
-    content: "";
-    flex: 1;
-    height: 2px;
-    background-color: #000000;
-    margin: 0 10px;
-}
+
 
 /* Alinear párrafos */
 p {
@@ -174,7 +183,5 @@ nav {
     z-index: 1060; /* Asegura que el menú desplegable esté por encima de otros elementos */
 }
 
-.navbar-toggler {
-    position: relative; /* Asegura que no interfiera con el menú desplegable */
-    z-index: 1060; /* Asegura que el botón de hamburguesa esté encima */
-}
+
+
