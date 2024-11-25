@@ -1,69 +1,229 @@
 <?php
-    session_start();
-    include './conexion.php';
+session_start();
+include './conexion.php';
 
-    if ($conn->connect_error) {
-        die("Error de conexión: " . $conn->connect_error);
-    }
+if ($conn->connect_error) {
+    die("Error de conexión: " . $conn->connect_error);
+}
 
-    // Mostrar mensajes si existen
-    $message = "";
-    if (isset($_SESSION['message'])) {
-        $message = "<div class='my-2 alert alert-" . ($_SESSION['message_type'] === "success" ? "success" : "danger") . "'>" 
-                . $_SESSION['message'] . 
-                "</div>";
-        unset($_SESSION['message']);
-        unset($_SESSION['message_type']);
-    }
+// Mostrar mensajes si existen
+$message = "";
+if (isset($_SESSION['message'])) {
+    $message = "<div class='my-2 alert alert-" . ($_SESSION['message_type'] === "success" ? "success" : "danger") . "'>" 
+            . $_SESSION['message'] . 
+            "</div>";
+    unset($_SESSION['message']);
+    unset($_SESSION['message_type']);
+}
 
-    // Consulta para obtener proyectos con estado distinto a "Completado" o "Terminado"
-    $query = "
-        SELECT 
-            p.id_proyecto, 
-            p.nombre AS proyecto, 
-            p.fecha, 
-            p.suma_total, 
-            p.hidraulica, 
-            p.termica, 
-            p.nuclear, 
-            p.renovable, 
-            r.nombre AS region, 
-            es.nombre AS estado
-        FROM proyectos p
-        JOIN regiones r ON p.region = r.id_regiones
-        JOIN estados es ON p.estado = es.id_estados
-        WHERE es.nombre NOT IN ('Completado', 'Terminado')
-    ";
-    $result = $conn->query($query);
+// Consulta para obtener proyectos con estado distinto a "Completado" o "Terminado"
+$query = "
+    SELECT 
+        p.id_proyecto, 
+        p.nombre AS proyecto, 
+        p.fecha, 
+        p.suma_total, 
+        p.hidraulica, 
+        p.termica, 
+        p.nuclear, 
+        p.renovable, 
+        r.nombre AS region, 
+        r.id_api AS id_region, -- Cambiamos a id_api y usamos el alias id_region
+        es.nombre AS estado
+    FROM proyectos p
+    JOIN regiones r ON p.region = r.id_regiones
+    JOIN estados es ON p.estado = es.id_estados
+    WHERE es.nombre NOT IN ('Completado', 'Terminado', 'Inactivo', 'Sin Estado')
+    ORDER BY p.id_proyecto ASC
+";
+$result = $conn->query($query);
 
-    // Almacenar los datos en un array para la tabla
-    $proyectos = [];
-    while ($row = $result->fetch_assoc()) {
-        $proyectos[] = $row;
-    }
+// Almacenar los datos en un array para la tabla
+$proyectos = [];
+while ($row = $result->fetch_assoc()) {
+    $proyectos[] = $row;
+}
 
-    // Cerrar conexión
-    $conn->close();
+// Cerrar conexión
+$conn->close();
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proveedores</title>
+    <title>Proyección de Proyectos</title>
     <link rel="stylesheet" href="../css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
     <div class="container Fondo-principal">
         <?php include '../drivers/menuPages.php'; ?>
-        <h1 class="text-center text-primary">PROYECCION</h1>
+        <h1 class="mb-4">Proyección de Proyectos</h1>
+        
+        <!-- Mostrar mensaje -->
+        <?php echo $message; ?>
 
-        <?php include("../drivers/tabla_proyeccion.php") ?>
+        <!-- Tabla -->
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Proyecto</th>
+                        <th>Nombre del Proyecto</th>
+                        <th>Fecha</th>
+                        <th>Suma Total (MW)</th>
+                        <th>Hidráulica (MW)</th>
+                        <th>Térmica (MW)</th>
+                        <th>Nuclear (MW)</th>
+                        <th>Renovable (MW)</th>
+                        <th>Región</th>
+                        <th>Estado</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($proyectos as $proyecto): ?>
+                        <tr>
+                            <td><?= $proyecto['id_proyecto'] ?></td>
+                            <td><?= $proyecto['proyecto'] ?></td>
+                            <td><?= $proyecto['fecha'] ?></td>
+                            <td><?= $proyecto['suma_total'] ?></td>
+                            <td><?= $proyecto['hidraulica'] ?></td>
+                            <td><?= $proyecto['termica'] ?></td>
+                            <td><?= $proyecto['nuclear'] ?></td>
+                            <td><?= $proyecto['renovable'] ?></td>
+                            <td><?= $proyecto['region'] ?></td>
+                            <td><?= $proyecto['estado'] ?></td>
+                            <td>
+                                <button class="btn btn-info btn-visualizar" data-id="<?= $proyecto['id_region'] ?>">Visualizar</button>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
 
+        <!-- Sección para mostrar el gráfico detallado -->
+        <div id="grafico-detallado" class="mt-5" style="display: none;">
+            <h2>Gráfico Detallado del Proyecto</h2>
+            <canvas id="graficoProyecto" width="400" height="200"></canvas>
+        </div>
     </div>
+
     <script src="../js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Event listener para alternar la visibilidad del gráfico detallado
+        document.querySelectorAll('.btn-visualizar').forEach(button => {
+            button.addEventListener('click', function () {
+                const idProyecto = this.dataset.id; // Obtener el ID del proyecto del botón
+                const graficoSeccion = document.getElementById('grafico-detallado'); // Seleccionar la sección del gráfico
+                
+                // Alternar visibilidad
+                if (graficoSeccion.style.display === 'none' || graficoSeccion.style.display === '') {
+                    graficoSeccion.style.display = 'block'; // Mostrar gráfico
+
+                    graficar(idProyecto);
+
+                    console.log("Proyecto seleccionado: " + idProyecto);
+
+                } else {
+                    graficoSeccion.style.display = 'none'; // Ocultar gráfico
+
+                    console.log("Ocultando gráfico para el proyecto: " + idProyecto);
+                }
+            });
+        });
+
+        function graficar(idRegion){
+            // Calcular la fecha del día anterior
+            const fechaActual = new Date();
+            fechaActual.setDate(fechaActual.getDate() - 1);
+            const fechaAyer = fechaActual.toISOString().split('T')[0]; // Formato YYYY-MM-DD
+
+            // URL de la API
+            const url = `https://api.cammesa.com/demanda-svc/demanda/ObtieneDemandaYTemperaturaRegionByFecha?fecha=${fechaAyer}&id_region=${idRegion}`;
+
+            // console.log(url);
+            // Hacer la solicitud a la API
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    // console.log(data);
+
+                    // Procesar datos
+                    const etiquetas = data.map(entry => new Date(entry.fecha).toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' }));
+                    const demanda = data.map(entry => entry.dem);
+                    const temperatura = data.map(entry => entry.temp || null);
+               
+                    // Mostrar el gráfico
+                    renderizarGrafico(etiquetas, demanda, temperatura);
+                })
+                .catch(error => {
+                    console.error('Error al obtener datos de la API:', error);
+                });
+        }
+
+        function renderizarGrafico(labels, demanda, temperatura) {
+            const ctx = document.getElementById('graficoProyecto').getContext('2d');
+            
+            if (window.miGrafico) {
+                window.miGrafico.destroy(); // Destruir gráfico previo si existe
+            }
+            
+            window.miGrafico = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Demanda (MW)',
+                            data: demanda,
+                            borderColor: 'blue',
+                            backgroundColor: 'rgba(0, 0, 255, 0.1)',
+                            borderWidth: 2,
+                            tension: 0.3
+                        },
+                        {
+                            label: 'Temperatura (°C)',
+                            data: temperatura,
+                            borderColor: 'orange',
+                            backgroundColor: 'rgba(255, 165, 0, 0.1)',
+                            borderWidth: 2,
+                            tension: 0.3,
+                            hidden: true // Inicialmente oculto, opcional
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top',
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Hora'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Valores'
+                            }
+                        }
+                    }
+                }
+            });
+
+        }
+    </script>
 </body>
 </html>
