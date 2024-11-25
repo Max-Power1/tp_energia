@@ -57,6 +57,7 @@ $conn->close();
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div class="container Fondo-principal">
@@ -114,169 +115,191 @@ $conn->close();
     </div>
 
     <script src="../js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <script>
         // Event listener para alternar la visibilidad del gráfico detallado
         document.querySelectorAll('.btn-visualizar').forEach(button => {
             button.addEventListener('click', function () {
-                const idProyecto = this.dataset.id; // Obtener el ID del proyecto del botón
+                const idRegion = this.dataset.id; // Obtener el ID de la región del botón
                 const graficoSeccion = document.getElementById('grafico-detallado'); // Seleccionar la sección del gráfico
                 
                 // Alternar visibilidad
                 if (graficoSeccion.style.display === 'none' || graficoSeccion.style.display === '') {
                     graficoSeccion.style.display = 'block'; // Mostrar gráfico
 
-                    graficar(idProyecto);
+                    graficar(idRegion);
 
-                    console.log("Proyecto seleccionado: " + idProyecto);
+                    console.log("Proyecto seleccionado: " + idRegion);
 
                 } else {
                     graficoSeccion.style.display = 'none'; // Ocultar gráfico
 
-                    console.log("Ocultando gráfico para el proyecto: " + idProyecto);
+                    console.log("Ocultando gráfico para el proyecto: " + idRegion);
                 }
             });
         });
 
         function graficar(idRegion) {
-        // Calcular la fecha del día anterior
-        const fechaActual = new Date();
-        fechaActual.setDate(fechaActual.getDate() - 1);
-        const fechaAyer = fechaActual.toISOString().split('T')[0]; // Formato YYYY-MM-DD
+            // Calcular la fecha del día anterior
+            const fechaActual = new Date();
+            fechaActual.setDate(fechaActual.getDate() - 1);
+            const fechaAyer = fechaActual.toISOString().split('T')[0]; // Formato YYYY-MM-DD
 
-        // URLs de ambas APIs
-        const urlDemanda = `https://api.cammesa.com/demanda-svc/demanda/ObtieneDemandaYTemperaturaRegionByFecha?fecha=${fechaAyer}&id_region=${idRegion}`;
-        const urlGeneracion = `https://api.cammesa.com/demanda-svc/generacion/ObtieneGeneracioEnergiaPorRegion?id_region=${idRegion}`;
+            // URLs de ambas APIs
+            const urlDemanda = `https://api.cammesa.com/demanda-svc/demanda/ObtieneDemandaYTemperaturaRegionByFecha?fecha=${fechaAyer}&id_region=${idRegion}`;
+            const urlGeneracion = `https://api.cammesa.com/demanda-svc/generacion/ObtieneGeneracioEnergiaPorRegion?id_region=${idRegion}`;
 
-        // Hacer la solicitud a ambas APIs
-        Promise.all([
-            fetch(urlDemanda).then(response => response.json()),
-            fetch(urlGeneracion).then(response => response.json())
-        ])
-        .then(([dataDemanda, dataGeneracion]) => {
-            // Procesar datos de la API de Demanda y Temperatura
-            const etiquetas = dataDemanda.map(entry => new Date(entry.fecha).toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' }));
-            const demanda = dataDemanda.map(entry => entry.dem);
-            const temperatura = dataDemanda.map(entry => entry.temp || null);
+            // Hacer la solicitud a ambas APIs
+            Promise.all([
+                fetch(urlDemanda).then(response => response.json()),
+                fetch(urlGeneracion).then(response => response.json())
+            ])
+            .then(([dataDemanda, dataGeneracion]) => {
+                // Procesar datos de la API de Demanda y Temperatura
+                const etiquetas = dataDemanda.map(entry => new Date(entry.fecha).toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' }));
+                const demanda = dataDemanda.map(entry => entry.dem);
+                const temperatura = dataDemanda.map(entry => entry.temp || null);
 
-            // Procesar datos de la API de Generación de Energía
-            const generacionHidraulico = dataGeneracion.map(entry => entry.hidraulico);
-            const generacionTermico = dataGeneracion.map(entry => entry.termico);
-            const generacionNuclear = dataGeneracion.map(entry => entry.nuclear);
-            const generacionRenovable = dataGeneracion.map(entry => entry.renovable);
-            const generacionImportacion = dataGeneracion.map(entry => entry.importacion);
+                // Procesar datos de la API de Generación de Energía
+                const generacionHidraulico = dataGeneracion.map(entry => entry.hidraulico);
+                const generacionTermico = dataGeneracion.map(entry => entry.termico);
+                const generacionNuclear = dataGeneracion.map(entry => entry.nuclear);
+                const generacionRenovable = dataGeneracion.map(entry => entry.renovable);
+                const generacionImportacion = dataGeneracion.map(entry => entry.importacion);
 
-            // Mostrar el gráfico
-            renderizarGrafico(etiquetas, demanda, temperatura, generacionHidraulico, generacionTermico, generacionNuclear, generacionRenovable, generacionImportacion);
-        })
-        .catch(error => {
-            console.error('Error al obtener datos de las APIs:', error);
-        });
-    }
-
-
-
-    function renderizarGrafico(labels, demanda, temperatura, generacionHidraulico, generacionTermico, generacionNuclear, generacionRenovable, generacionImportacion) {
-        const ctx = document.getElementById('graficoProyecto').getContext('2d');
-
-        if (window.miGrafico) {
-            window.miGrafico.destroy(); // Destruir gráfico previo si existe
+                // Mostrar el gráfico
+                renderizarGrafico(etiquetas, demanda, temperatura, generacionHidraulico, generacionTermico, generacionNuclear, generacionRenovable, generacionImportacion);
+            })
+            .catch(error => {
+                console.error('Error al obtener datos de las APIs:', error);
+            });
         }
 
-        window.miGrafico = new Chart(ctx, {
-            type: 'line', // Tipo de gráfico general
-            data: {
-                labels: labels,
-                datasets: [
-                    {
-                        label: 'Demanda (MW)',
-                        data: demanda,
-                        borderColor: 'blue',
-                        backgroundColor: 'rgba(0, 0, 255, 0.1)',
-                        borderWidth: 2,
-                        tension: 0.3
-                    },
-                    {
-                        label: 'Temperatura (°C)',
-                        data: temperatura,
-                        borderColor: 'orange',
-                        backgroundColor: 'rgba(255, 165, 0, 0.1)',
-                        borderWidth: 2,
-                        tension: 0.3,
-                        hidden: true // Inicialmente oculto
-                    },
-                    {
-                        label: 'Generación Hidráulica (MW)',
-                        data: generacionHidraulico,
-                        borderColor: 'green',
-                        backgroundColor: 'rgba(0, 255, 0, 0.3)',
-                        borderWidth: 2,
-                        fill: true,
-                        tension: 0.3
-                    },
-                    {
-                        label: 'Generación Térmica (MW)',
-                        data: generacionTermico,
-                        borderColor: 'red',
-                        backgroundColor: 'rgba(255, 0, 0, 0.3)',
-                        borderWidth: 2,
-                        fill: true,
-                        tension: 0.3
-                    },
-                    {
-                        label: 'Generación Nuclear (MW)',
-                        data: generacionNuclear,
-                        borderColor: 'purple',
-                        backgroundColor: 'rgba(128, 0, 128, 0.3)',
-                        borderWidth: 2,
-                        fill: true,
-                        tension: 0.3
-                    },
-                    {
-                        label: 'Generación Renovable (MW)',
-                        data: generacionRenovable,
-                        borderColor: 'yellow',
-                        backgroundColor: 'rgba(255, 255, 0, 0.3)',
-                        borderWidth: 2,
-                        fill: true,
-                        tension: 0.3
-                    },
-                    {
-                        label: 'Generación por Importación (MW)',
-                        data: generacionImportacion,
-                        borderColor: 'gray',
-                        backgroundColor: 'rgba(169, 169, 169, 0.3)',
-                        borderWidth: 2,
-                        fill: true,
-                        tension: 0.3
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        display: true,
-                        position: 'top',
-                    }
+        function renderizarGrafico(labels, demanda, temperatura, generacionHidraulico, generacionTermico, generacionNuclear, generacionRenovable, generacionImportacion) {
+            // Selecciono el canvas
+            const ctx = document.getElementById('graficoProyecto').getContext('2d');
+
+            if (window.miGrafico) {
+                window.miGrafico.destroy(); // Destruir gráfico previo si existe
+            }
+
+            window.miGrafico = new Chart(ctx, {
+                type: 'line', // Tipo de gráfico general
+                data: {
+                    labels: labels,
+                    datasets: [
+                        // Los datasets de generación con apilamiento
+                        {
+                            label: 'Generación Hidráulica (MW)',
+                            data: generacionHidraulico,
+                            borderColor: 'green',
+                            backgroundColor: 'rgba(0, 255, 0, 0.3)',
+                            borderWidth: 2,
+                            fill: 'origin',
+                            tension: 0.3,
+                            yAxisID: 'yGeneracion', // Usar el eje Y para generación
+                        },
+                        {
+                            label: 'Generación Térmica (MW)',
+                            data: generacionTermico,
+                            borderColor: 'red',
+                            backgroundColor: 'rgba(255, 0, 0, 0.3)',
+                            borderWidth: 2,
+                            fill: 'origin',
+                            tension: 0.3,
+                            yAxisID: 'yGeneracion', // Usar el eje Y para generación
+                        },
+                        {
+                            label: 'Generación Nuclear (MW)',
+                            data: generacionNuclear,
+                            borderColor: 'purple',
+                            backgroundColor: 'rgba(128, 0, 128, 0.3)',
+                            borderWidth: 2,
+                            fill: 'origin',
+                            tension: 0.3,
+                            yAxisID: 'yGeneracion', // Usar el eje Y para generación
+                        },
+                        {
+                            label: 'Generación Renovable (MW)',
+                            data: generacionRenovable,
+                            borderColor: 'yellow',
+                            backgroundColor: 'rgba(255, 255, 0, 0.3)',
+                            borderWidth: 2,
+                            fill: 'origin',
+                            tension: 0.3,
+                            yAxisID: 'yGeneracion', // Usar el eje Y para generación
+                        },
+                        {
+                            label: 'Generación por Importación (MW)',
+                            data: generacionImportacion,
+                            borderColor: 'gray',
+                            backgroundColor: 'rgba(169, 169, 169, 0.3)',
+                            borderWidth: 2,
+                            fill: 'origin',
+                            tension: 0.3,
+                            yAxisID: 'yGeneracion', // Usar el eje Y para generación
+                        },
+                        // Los datasets de demanda y temperatura (no apilados)
+                        {
+                            label: 'Demanda (MW)',
+                            data: demanda,
+                            borderColor: 'blue',
+                            backgroundColor: 'rgba(0, 0, 255, 0.3)',
+                            borderWidth: 2,
+                            fill: false,
+                            tension: 0.3,
+                            yAxisID: 'yDemanda', // Usar el eje Y para demanda
+                        },
+                        {
+                            label: 'Temperatura (°C)',
+                            data: temperatura,
+                            borderColor: 'orange',
+                            backgroundColor: 'rgba(255, 165, 0, 0.3)',
+                            borderWidth: 2,
+                            fill: false,
+                            tension: 0.3,
+                            yAxisID: 'yTemperatura', // Usar el eje Y para temperatura
+                        }
+                    ]
                 },
-                scales: {
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Hora'
+                options: {
+                    responsive: true,
+                    scales: {
+                        yGeneracion: {
+                            position: 'left',
+                            beginAtZero: true,
+                            stacked: true, // Para apilar las barras
+                            title: {
+                                display: true,
+                                text: 'Generación de Energía (MW)'
+                            }
+                        },
+                        yDemanda: {
+                            position: 'right',
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Demanda (MW)'
+                            }
+                        },
+                        yTemperatura: {
+                            position: 'right',
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Temperatura (°C)'
+                            }
                         }
                     },
-                    y: {
-                        title: {
+                    plugins: {
+                        legend: {
                             display: true,
-                            text: 'Valores (MW)'
-                        }
+                            position: 'top',
+                        },
                     }
                 }
-            }
-        });
-    }
+            });
+        }
     </script>
 </body>
 </html>
